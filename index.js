@@ -1,4 +1,4 @@
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const axios = require('axios');
 const fs = require('fs');
 const colors = require('colors');
@@ -37,18 +37,6 @@ client.on('message', async message => {
       content: message.content
     };
 
-    // Lưu hình ảnh và video
-    const attachments = [];
-    message.attachments.forEach(attachment => {
-      const { name, url } = attachment;
-      attachments.push({ name, url });
-    });
-
-    // nếu có hình ảnh hoặc video, thêm vào payload
-    if (attachments.length > 0) {
-      payload.files = attachments;
-    }
-
     // gửi mess qua sv khác
     await axios.post(webhookUrl, payload);
 
@@ -70,12 +58,12 @@ client.on('message', async message => {
   }
 });
 
+
 client.on('message', msg => { 
-    if (msg.content.includes('ân')) {
-      msg.reply('Kêu cc');
-    }
-  });
+  if ((msg.content.toLowerCase() === 'ân' || msg.content.includes('ân ') || msg.content.includes(' ân')) && !msg.author.bot) {
+    msg.reply('Kêu cc');
+  }
+});
 
+  
 client.login(process.env.TOKEN);
-
-
